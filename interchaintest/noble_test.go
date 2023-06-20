@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"testing"
 
+	fiattokenfactorytypes "github.com/circlefin/noble-fiattokenfactory/x/fiattokenfactory/types"
 	"github.com/strangelove-ventures/interchaintest/v3"
 	"github.com/strangelove-ventures/interchaintest/v3/chain/cosmos"
 	"github.com/strangelove-ventures/interchaintest/v3/ibc"
@@ -329,12 +330,21 @@ func nobleTokenfactory_e2e(t *testing.T, ctx context.Context, tokenfactoryModNam
 	res, _, err := nobleValidator.ExecQuery(ctx, tokenfactoryModName, "show-minter-controller", roles.MinterController2.Address, "-o", "json")
 	require.NoError(t, err, "failed to query minter controller")
 
-	var minterControllerType types.QueryGetMinterControllerResponse
-	json.Unmarshal(res, &minterControllerType)
+	if tokenfactoryModName == "fiat-tokenfactory" {
+		var minterControllerType fiattokenfactorytypes.QueryGetMinterControllerResponse
+		json.Unmarshal(res, &minterControllerType)
 
-	// minter controller and minter should have been updated even while paused
-	require.Equal(t, roles.MinterController2.Address, minterControllerType.MinterController.Controller)
-	require.Equal(t, extraWallets.User.Address, minterControllerType.MinterController.Minter)
+		// minter controller and minter should have been updated even while paused
+		require.Equal(t, roles.MinterController2.Address, minterControllerType.MinterController.Controller)
+		require.Equal(t, extraWallets.User.Address, minterControllerType.MinterController.Minter)
+	} else {
+		var minterControllerType types.QueryGetMinterControllerResponse
+		json.Unmarshal(res, &minterControllerType)
+
+		// minter controller and minter should have been updated even while paused
+		require.Equal(t, roles.MinterController2.Address, minterControllerType.MinterController.Controller)
+		require.Equal(t, extraWallets.User.Address, minterControllerType.MinterController.Minter)
+	}
 
 	_, err = nobleValidator.ExecTx(ctx, roles.MinterController2.KeyName,
 		tokenfactoryModName, "remove-minter", extraWallets.User.Address, "-b", "block",

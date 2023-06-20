@@ -8,7 +8,7 @@ import (
 )
 
 func TestGrand1ChainUpgrade(t *testing.T) {
-	repo, version := integration.GetDockerImageInfo()
+	_, _ = integration.GetDockerImageInfo()
 
 	const (
 		grand1ChainID = "grand-1"
@@ -48,8 +48,8 @@ func TestGrand1ChainUpgrade(t *testing.T) {
 		{
 			// post radon patch upgrade (will be applied as rolling upgrade due to lack of upgradeName)
 			image: ibc.DockerImage{
-				Repository: repo,
-				Version:    version,
+				Repository: "ghcr.io/strangelove-ventures/noble",
+				Version:    "v3.0.0",
 				UidGid:     containerUidGid,
 			},
 		},

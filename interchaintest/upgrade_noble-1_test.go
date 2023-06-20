@@ -8,7 +8,7 @@ import (
 )
 
 func TestNoble1ChainUpgrade(t *testing.T) {
-	repo, version := integration.GetDockerImageInfo()
+	_, _ = integration.GetDockerImageInfo()
 
 	const (
 		noble1ChainID = "noble-1"
@@ -42,8 +42,8 @@ func TestNoble1ChainUpgrade(t *testing.T) {
 		{
 			upgradeName: "radon",
 			image: ibc.DockerImage{
-				Repository: repo,
-				Version:    version,
+				Repository: "ghcr.io/strangelove-ventures/noble",
+				Version:    "v3.0.0",
 				UidGid:     containerUidGid,
 			},
 			postUpgrade: testPostRadonUpgrade,

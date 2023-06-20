@@ -13,6 +13,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+type QueryGetMintingDenomResponse struct {
+	MintingDenom fiattokenfactorytypes.MintingDenom `protobuf:"bytes,1,opt,name=mintingDenom,proto3" json:"mintingDenom"`
+}
+
 func testPostRadonUpgrade(
 	t *testing.T,
 	ctx context.Context,
@@ -29,7 +33,7 @@ func testPostRadonUpgrade(
 	queryResult, _, err = noble.Validators[0].ExecQuery(ctx, "fiat-tokenfactory", "show-minting-denom")
 	require.NoError(t, err, "error querying minting denom")
 
-	var mintingDenomResponse fiattokenfactorytypes.QueryGetMintingDenomResponse
+	var mintingDenomResponse QueryGetMintingDenomResponse
 	err = json.Unmarshal(queryResult, &mintingDenomResponse)
 	require.NoError(t, err, "failed to unmarshall globalfee params")
 
@@ -97,7 +101,7 @@ func testPostRadonUpgrade(
 
 	queryResult, _, err = noble.Validators[0].ExecQuery(ctx, "fiat-tokenfactory", "show-minting-denom")
 	require.NoError(t, err, "failed to query minting denom")
-	var mintingDenom fiattokenfactorytypes.QueryGetMintingDenomResponse
+	var mintingDenom QueryGetMintingDenomResponse
 
 	err = json.Unmarshal(queryResult, &mintingDenom)
 	require.NoError(t, err, "failed to unmarshall minting denom")
