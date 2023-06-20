@@ -85,6 +85,9 @@ import (
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
 
+	fiattokenfactorymodule "github.com/circlefin/noble-fiattokenfactory/x/fiattokenfactory"
+	fiattokenfactorymodulekeeper "github.com/circlefin/noble-fiattokenfactory/x/fiattokenfactory/keeper"
+	fiattokenfactorymoduletypes "github.com/circlefin/noble-fiattokenfactory/x/fiattokenfactory/types"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	stakingkeeper "github.com/cosmos/cosmos-sdk/x/staking/keeper"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
@@ -93,9 +96,6 @@ import (
 	"github.com/strangelove-ventures/noble/cmd"
 	"github.com/strangelove-ventures/noble/docs"
 	"github.com/strangelove-ventures/noble/x/blockibc"
-	fiattokenfactorymodule "github.com/strangelove-ventures/noble/x/fiattokenfactory"
-	fiattokenfactorymodulekeeper "github.com/strangelove-ventures/noble/x/fiattokenfactory/keeper"
-	fiattokenfactorymoduletypes "github.com/strangelove-ventures/noble/x/fiattokenfactory/types"
 	"github.com/strangelove-ventures/noble/x/globalfee"
 	globalfeetypes "github.com/strangelove-ventures/noble/x/globalfee/types"
 	tariff "github.com/strangelove-ventures/noble/x/tariff"
@@ -623,7 +623,7 @@ func New(
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
 		tokenfactoryModule,
-		fiattokenfactorymodule,
+		//fiattokenfactorymodule,
 	)
 	app.sm.RegisterStoreDecoders()
 
